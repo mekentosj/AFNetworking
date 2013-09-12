@@ -111,8 +111,8 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
 static NSData *AFSecKeyGetData(SecKeyRef key) {
     CFDataRef data = NULL;
     
-    OSStatus status = SecItemExport(key, kSecFormatUnknown, kSecItemPemArmour, NULL, &data);
-    NSCAssert(status == errSecSuccess, @"SecItemExport error: %ld", (long int)status);
+    // ugly but necessary to cater for both release and debug
+    NSCAssert(SecItemExport(key, kSecFormatUnknown, kSecItemPemArmour, NULL, &data) == errSecSuccess, @"SecItemExport error: %ld", (long int)SecItemExport(key, kSecFormatUnknown, kSecItemPemArmour, NULL, &data));
     NSCParameterAssert(data);
     
     return (__bridge_transfer NSData *)data;
