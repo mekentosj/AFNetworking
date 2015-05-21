@@ -21,7 +21,10 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+
 #import "AFURLConnectionOperation.h"
+#import "AFHTTPClientParameterEncoding.h"
 
 #import <Availability.h>
 
@@ -74,12 +77,12 @@
  */
 
 #ifdef _SYSTEMCONFIGURATION_H
-typedef enum {
+typedef NS_ENUM(NSInteger, AFNetworkReachabilityStatus) {
     AFNetworkReachabilityStatusUnknown          = -1,
     AFNetworkReachabilityStatusNotReachable     = 0,
     AFNetworkReachabilityStatusReachableViaWWAN = 1,
     AFNetworkReachabilityStatusReachableViaWiFi = 2,
-} AFNetworkReachabilityStatus;
+};
 #else
 #pragma message("SystemConfiguration framework not found in project, or not included in precompiled header. Network reachability functionality will not be available.")
 #endif
@@ -91,12 +94,6 @@ typedef enum {
 #pragma message("CoreServices framework not found in project, or not included in precompiled header. Automatic MIME type detection when uploading files in multipart requests will not be available.")
 #endif
 #endif
-
-typedef enum {
-    AFFormURLParameterEncoding,
-    AFJSONParameterEncoding,
-    AFPropertyListParameterEncoding,
-} AFHTTPClientParameterEncoding;
 
 @class AFHTTPRequestOperation;
 @protocol AFMultipartFormData;
